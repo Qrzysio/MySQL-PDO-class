@@ -6,15 +6,16 @@ class Db {
   private $user      = DB_USER;
   private $pass      = DB_PASS;
   private $dbname    = DB_NAME;
+  private $port      = DB_PORT;
 
-  public $isConnected;
+  public $isConnected = false;
 
   private $dbh;
   private $error;
   private $stmt;
 
   public function __construct() {
-    $dsn = 'mysql:host='.$this->host.';dbname='.$this->dbname.'';
+    $dsn = 'mysql:host='.$this->host.';dbname='.$this->dbname.';port='.$this->port;
     // Set options
     $options = array(
       PDO::ATTR_PERSISTENT    => true,
@@ -25,9 +26,9 @@ class Db {
     // Create a new PDO instanace
     try{
       $this->dbh = new PDO($dsn, $this->user, $this->pass, $options);
+      $this->isConnected = true;
     }
     catch(PDOException $e) {
-      $this->isConnected = false;
       $this->error = $e->getMessage();
     }
   }
@@ -60,12 +61,12 @@ class Db {
   }
 
   public function fetch() {
-    $this->execute();
+    $this->exec();
     return $this->stmt->fetchAll(PDO::FETCH_ASSOC);
   }
 
   public function single() {
-    $this->execute();
+    $this->exec();
     return $this->stmt->fetch(PDO::FETCH_ASSOC);
   }
 
