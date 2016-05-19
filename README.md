@@ -2,14 +2,11 @@
 
 Just another php class to coper with MySQL via PDO.
 
-### Version
-1.0
-
 ### Installation
 
 Use composer:
 ```
-composer require 
+composer require qrzysio/mysql-pdo-class
 ```
 
 ### Usage
