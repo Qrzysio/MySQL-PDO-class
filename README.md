@@ -12,7 +12,9 @@ composer require qrzysio/mysql-pdo-class
 ### Usage
 
 ```
-$database = new Database();
+require 'vendor/autoload.php';
+
+$database = new Db();
 
 $database->query('INSERT INTO mytable (FName, LName, Age, Gender) VALUES (:fname, :lname, :age, :gender)');
 $database->bind(':fname', 'John');
