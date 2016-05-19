@@ -1,9 +1,16 @@
 # Intro
-Just another php class.
+
+Just another php class to coper with MySQL via PDO.
+
 ### Version
 1.0
+
 ### Installation
 
+Use composer:
+```
+composer require 
+```
 
 ### Usage
 
@@ -21,7 +28,7 @@ $database->execute();
 echo $database->lastInsertId();
 
 
-*** Transakcje ***
+*** Transactions ***
 
 $database->beginTransaction();
 
@@ -71,6 +78,7 @@ git push origin --tags
 ```
 
 ### License
-This script is based on 
+This script was made by a bloger and published here:
+http://culttt.com/2012/10/01/roll-your-own-pdo-php-class/
 
-MIT
+There is no info about license, so I believe it's MIT. I did some small changes in the code and perhaps will do more in the future. According to the former author, license of this script is MIT.
