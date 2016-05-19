@@ -1,11 +1,11 @@
 {
     "name": "qrzysio/mysql-pdo-class",
     "type": "library",    
-    "description": "Just another MySQL/PDO class (PHP).",
+    "description": "Just another PHP class to cope with MySQL via PDO.",
     "keywords": ["mysql", "class", "pdo", "php"],
     "minimum-stability": "stable",
     "license": "MIT",    
     "require": {
-      "php": ">=5.3.0"
+      "php": ">=5.5.0"
     }
 }

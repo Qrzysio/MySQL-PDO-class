@@ -14,16 +14,15 @@ class Db {
   private $stmt;
 
   public function __construct() {
-        // Set DSN
-    //$dsn = 'mysql:host=' . $this->host . ';dbname=' . $this->dbname;
     $dsn = 'mysql:host='.$this->host.';dbname='.$this->dbname.'';
-        // Set options
+    // Set options
     $options = array(
       PDO::ATTR_PERSISTENT    => true,
       PDO::ATTR_ERRMODE       => PDO::ERRMODE_EXCEPTION,
       PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
       );
-        // Create a new PDO instanace
+
+    // Create a new PDO instanace
     try{
       $this->dbh = new PDO($dsn, $this->user, $this->pass, $options);
     }

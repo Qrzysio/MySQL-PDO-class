@@ -1,6 +1,6 @@
 # Intro
 
-Just another php class to coper with MySQL via PDO.
+Just another PHP class to cope with MySQL via PDO.
 
 ### Installation
 
