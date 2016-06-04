@@ -6,7 +6,7 @@
     "minimum-stability": "stable",
     "license": "MIT",    
     "require": {
-      "php": ">=5.5.0"
+      "php": ">=5.1.0"
     },
     "autoload": {
         "files": ["src/mysql.pdo.lib.php"]

@@ -86,7 +86,7 @@ class Db {
     return $this->dbh->commit();
   }
 
-  public function cancelTrans() {
+  public function cancel() {
     return $this->dbh->rollBack();
   }
 

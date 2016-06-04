@@ -1,83 +1,144 @@
-# Intro
+Intro
+=====
 
 Just another PHP class to cope with MySQL via PDO.
 
 ### Installation
 
 Use composer:
-```
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 composer require qrzysio/mysql-pdo-class
-```
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ### Usage
 
-```
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 require 'vendor/autoload.php';
 
-$database = new Db();
+$db = new Db();
 
-$database->query('INSERT INTO mytable (FName, LName, Age, Gender) VALUES (:fname, :lname, :age, :gender)');
-$database->bind(':fname', 'John');
-$database->bind(':lname', 'Smith');
-$database->bind(':age', '24');
-$database->bind(':gender', 'male');
-$database->execute();
+$db->query('INSERT INTO mytable (FName, LName, Age, Gender) VALUES (:fname, :lname, :age, :gender)');
+$db->bind(':fname', 'John');
+$db->bind(':lname', 'Smith');
+$db->bind(':age', '24');
+$db->bind(':gender', 'male');
+$db->exec();
 
-
-echo $database->lastInsertId();
-
+echo $db->lastId();
 
 *** Transactions ***
 
-$database->beginTransaction();
+$db->beginTrans();
 
-$database->query('INSERT INTO mytable (FName, LName, Age, Gender) VALUES (:fname, :lname, :age, :gender)');
-$database->bind(':fname', 'Jenny');
-$database->bind(':lname', 'Smith');
-$database->bind(':age', '23');
-$database->bind(':gender', 'female');
-$database->execute();
+$db->query('INSERT INTO mytable (FName, LName, Age, Gender) VALUES (:fname, :lname, :age, :gender)');
+$db->bind(':fname', 'Jenny');
+$db->bind(':lname', 'Smith');
+$db->bind(':age', '23');
+$db->bind(':gender', 'female');
+$db->exec();
 
 
-$database->bind(':fname', 'Jilly');
-$database->bind(':lname', 'Smith');
-$database->bind(':age', '25');
-$database->bind(':gender', 'female');
-$database->execute();
+$db->bind(':fname', 'Jilly');
+$db->bind(':lname', 'Smith');
+$db->bind(':age', '25');
+$db->bind(':gender', 'female');
+$db->exec();
 
-echo $database->lastInsertId();
+echo $db->lastId();
 
-$database->endTransaction();
+$db->endTrans();
 
 *** Select a single row ***
 
-$database->query('SELECT FName, LName, Age, Gender FROM mytable WHERE FName = :fname');
-$database->bind(':fname', 'Jenny');
-$row = $database->single();
-
+$db->query('SELECT FName, LName, Age, Gender FROM mytable WHERE FName = :fname');
+$db->bind(':fname', 'Jenny');
+$row = $db->single();
 
 *** Select multiple rows ***
 
-$database->query('SELECT FName, LName, Age, Gender FROM mytable WHERE LName = :lname');
-$database->bind(':lname', 'Smith');
-$rows = $database->resultset();
+$db->query('SELECT FName, LName, Age, Gender FROM mytable WHERE LName = :lname');
+$db->bind(':lname', 'Smith');
+$rows = $db->fetch();
 
+echo $db->numrows();
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-echo $database->rowCount();
-```
+### Try { } catch { } usage
 
-### GIT commands
+It's very convenient to use `try` and `catch` blocks.
 
-```
-git tag -a 1.2 -m "1.2"
-git commit -a -m "2016.05.05"
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+try {
+  $db->query('INSERT INTO mytable (FName, LName, Age, Gender) VALUES (:fname, :lname, :age, :gender)');
+  $db->bind(':fname', 'Jenny');
+  $db->bind(':lname', 'Smith');
+  $db->bind(':age', '23');
+  $db->bind(':gender', 'female');
+  $db->exec();
+} catch (PDOException $e) {
+  echo '<p>Something went wrong!</p>';
+  echo '<p><strong>Details:</strong></p>';
+  echo '<p>'.$e->getMessage().'</p>';  
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-git push origin master
-git push origin --tags
-```
+Or more useful method.
+
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+try {
+
+  // doing some operations
+  ValidateFirst();
+
+  // adding to database
+  try {
+    $db->query('INSERT INTO mytable (FName, LName, Age, Gender) VALUES (:fname, :lname, :age, :gender)');
+    $db->bind(':fname', 'Jenny');
+    $db->bind(':lname', 'Smith');
+    $db->bind(':age', '23');
+    $db->bind(':gender', 'female');
+    $db->exec();    
+  } catch (PDOException $e) {
+    throw new Exception('We have an issue with this code!');    
+  }
+
+  // additional operations
+  DoSomehing();
+
+} catch (Exception $e) {
+  echo '<p>Something went wrong!</p>';
+  echo '<p><strong>Details:</strong></p>';
+  echo '<p>'.$e->getMessage().'</p>';  
+}
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+### All methods
+
+`exec()` - execute SQL query
+
+`fetch()` - fetch all rows and returns an array
+
+`single()` - fetch only one row as an array
+
+`numrows()` - returns number of rows affected or counted
+
+`lastId()` - last inserted ID
+
+`cancel()` - rollback the operation
+
+`debug()` - returns `debugDumpParams()` method from PDO
+
+`beginTrans()` - begins a transaction
+
+`endTrans()` - ends a transaction
+ 
 
 ### License
+
 This script was made by a bloger and published here:
 http://culttt.com/2012/10/01/roll-your-own-pdo-php-class/
 
-There is no info about license, so I believe it's MIT. I did some small changes in the code and perhaps will do more in the future. According to the former author, license of this script is MIT.
+There is no info about license, so I believe it's MIT. I did some small changes
+in the code and perhaps will do more in the future. According to the former
+author, license of this script is MIT.
