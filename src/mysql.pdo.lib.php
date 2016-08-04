@@ -1,7 +1,7 @@
 <?php
 
 class Db {
-  
+
   private $host      = DB_HOST;
   private $user      = DB_USER;
   private $pass      = DB_PASS;
@@ -71,6 +71,10 @@ class Db {
   }
 
   public function numrows() {
+    return $this->stmt->rowCount();
+  }
+
+  public function rowCount() {
     return $this->stmt->rowCount();
   }
 
