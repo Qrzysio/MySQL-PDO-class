@@ -18,7 +18,7 @@ class Db {
     $dsn = 'mysql:host='.$this->host.';dbname='.$this->dbname.';port='.$this->port;
     // Set options
     $options = array(
-      PDO::ATTR_PERSISTENT    => true,
+      PDO::ATTR_PERSISTENT    => false,
       PDO::ATTR_ERRMODE       => PDO::ERRMODE_EXCEPTION,
       PDO::MYSQL_ATTR_INIT_COMMAND => "SET NAMES utf8"
       );
