@@ -80,6 +80,11 @@ class Db
         return $this->single();
     }
 
+    public function fetchAffected()
+    {
+        return $this->numrows();
+    }
+
     public function numrows()
     {
         return $this->stmt->rowCount();
